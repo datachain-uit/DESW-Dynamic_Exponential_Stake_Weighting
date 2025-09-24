@@ -1,0 +1,38 @@
+{
+  "WEIGHTED": {
+    "final_gini": 0.961090774757059,
+    "final_nakamoto": 105,
+    "final_peers": 10000,
+    "final_hhi": 0.003843847777729435
+  },
+  "OPPOSITE_WEIGHTED": {
+    "final_gini": 0.287396072065891,
+    "final_nakamoto": 3143,
+    "final_peers": 10001,
+    "final_hhi": 0.0001272872074659427
+  },
+  "GINI_STABILIZED": {
+    "final_gini": 0.628644622546229,
+    "final_nakamoto": 1332,
+    "final_peers": 10000,
+    "final_hhi": 0.00030545045397548066
+  },
+  "LOG_WEIGHTED": {
+    "final_gini": 0.7438009549501612,
+    "final_nakamoto": 1036,
+    "final_peers": 10001,
+    "final_hhi": 0.0003684659665825264
+  },
+  "DESW": {
+    "final_gini": 0.6149709787062803,
+    "final_nakamoto": 1620,
+    "final_peers": 9998,
+    "final_hhi": 0.00023903943728878447
+  },
+  "SRSW_WEIGHTED": {
+    "final_gini": 0.747067757370099,
+    "final_nakamoto": 1021,
+    "final_peers": 10002,
+    "final_hhi": 0.000372675127166638
+  }
+}
