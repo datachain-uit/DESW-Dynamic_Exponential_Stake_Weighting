@@ -276,7 +276,7 @@ class BlockchainDecentralizationMetrics:
         print(f"Saved results CSV: {csv_path}")
 
 def main():
-    date = '02092025'
+    date = '27092025'
     
     if len(date) != 8 or not date.isdigit():
         print("Invalid format!")

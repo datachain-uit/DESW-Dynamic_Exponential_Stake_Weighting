@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "timestamp": "20250921_040029",
-    "total_execution_time": 17577.97828221321,
+    "timestamp": "20250925_031914",
+    "total_execution_time": 19203.101333856583,
     "parameters": {
       "n_epochs": 50000,
       "n_peers": 10000,
@@ -40,9 +40,9 @@
       "final_peers_std": 22.149,
       "final_peers_min": 9979,
       "final_peers_max": 10059,
-      "execution_time_mean": 256.906,
-      "execution_time_std": 13.539,
-      "execution_time_total": 2569.056
+      "execution_time_mean": 309.379,
+      "execution_time_std": 41.242,
+      "execution_time_total": 3093.785
     },
     "SRSW_WEIGHTED": {
       "algorithm": "SRSW_WEIGHTED",
@@ -60,9 +60,9 @@
       "final_peers_std": 25.584,
       "final_peers_min": 9942,
       "final_peers_max": 10038,
-      "execution_time_mean": 584.604,
-      "execution_time_std": 50.038,
-      "execution_time_total": 5846.04
+      "execution_time_mean": 679.975,
+      "execution_time_std": 89.595,
+      "execution_time_total": 6799.748
     },
     "LOG_WEIGHTED": {
       "algorithm": "LOG_WEIGHTED",
@@ -80,9 +80,9 @@
       "final_peers_std": 24.666,
       "final_peers_min": 9971,
       "final_peers_max": 10049,
-      "execution_time_mean": 578.357,
-      "execution_time_std": 5.229,
-      "execution_time_total": 5783.574
+      "execution_time_mean": 585.408,
+      "execution_time_std": 3.217,
+      "execution_time_total": 5854.085
     },
     "DESW": {
       "algorithm": "DESW",
@@ -100,9 +100,9 @@
       "final_peers_std": 13.602,
       "final_peers_min": 9985,
       "final_peers_max": 10031,
-      "execution_time_mean": 337.905,
-      "execution_time_std": 1.25,
-      "execution_time_total": 3379.054
+      "execution_time_mean": 345.526,
+      "execution_time_std": 1.14,
+      "execution_time_total": 3455.258
     }
   }
 }
