@@ -149,7 +149,7 @@ def calculate_statistical_significance(
             round(gini_wilcoxon[1], 6) if not np.isnan(gini_wilcoxon[1]) else None
         ),
         "gini_significant": bool(
-            gini_p_value < 0.05 if not np.isnan(gini_p_value) else False
+            gini_p_value < 0.001 if not np.isnan(gini_p_value) else False
         ),
         "gini_effect_size": round(gini_effect_size, 4),
         # Nakamoto coefficient tests
@@ -165,7 +165,7 @@ def calculate_statistical_significance(
             else None
         ),
         "nakamoto_significant": bool(
-            nakamoto_p_value < 0.05 if not np.isnan(nakamoto_p_value) else False
+            nakamoto_p_value < 0.001 if not np.isnan(nakamoto_p_value) else False
         ),
         "nakamoto_effect_size": round(nakamoto_effect_size, 4),
         # Interpretation
@@ -347,6 +347,7 @@ def run_benchmark():
         n_epochs=20000,  # Reduce epochs for faster execution
         initial_stake_volume=10000.0,
         initial_distribution=Distribution.GINI,
+        initial_gini=0.5,
         n_peers=1000,  # Reduce peers for faster execution
         n_corrupted=50,
         p_fail=0.3,

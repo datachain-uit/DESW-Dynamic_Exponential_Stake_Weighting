@@ -15,6 +15,8 @@ import time
 from datetime import datetime
 from typing import Dict, List, Tuple
 
+from scipy.stats import f
+
 # Add src to path
 sys.path.append(os.path.join(os.path.dirname(__file__), "..", "src"))
 
@@ -45,15 +47,21 @@ def run_single_experiment(
         scheduled_joins=params.scheduled_joins,
     )
 
+    # print(f"gini ban dau: {gini(stakes):.3f}")
+    # print(f"params ban dau: {params}")
+    # print(f"params test: {test_params}")
+
     # Create copies to avoid modifying original data (giống desw_experiment.py)
     test_stakes = stakes.copy()
     test_corrupted = corrupted.copy()
 
     start_time = time.time()
     gini_history, peers_history, nakamoto_history, _ = simulate(
-        test_stakes, test_corrupted, test_params
+        stakes, corrupted, test_params
     )
     end_time = time.time()
+    print(f"gini cuoi: {gini_history[-1]:.3f}")
+    print(f"nakamoto cuoi: {nakamoto_history[-1]:.1f}")
 
     return {
         "starting_gini": gini(stakes),
@@ -117,6 +125,9 @@ def sweep_p_ranges(
             for _ in range(runs_per_point):
                 run_out = run_single_experiment(base_params, stakes, corrupted)
                 runs.append(run_out)
+                print(
+                    f"Gini: {run_out['final_gini']:.3f} | Nakamoto: {run_out['final_nakamoto']:.1f}"
+                )
 
             cell_stats = calculate_statistics(runs)
             results["grid"][pmin][pmax] = cell_stats
@@ -203,6 +214,8 @@ def test_baseline(
         print(f"  Baseline run {i+1}/{runs}")
         result = run_single_experiment(params, stakes, corrupted)
         baseline_results.append(result)
+        print(f"Final Gini: {result['final_gini']:.3f}")
+        print(f"Final Nakamoto: {result['final_nakamoto']:.1f}")
 
     baseline_stats = calculate_statistics(baseline_results)
     print(
@@ -222,22 +235,22 @@ def main():
     random.seed(42)
     np.random.seed(42)
 
-    scheduled_joins = [(5000, 10000), (15000, 50000)]
+    scheduled_joins = []
 
     # Scenario (giữ giống kịch bản chuẩn, có thể chỉnh nhanh tại đây)
     params = Parameters(
         n_epochs=20000,
         proof_of_stake=PoS.DESW,
-        initial_stake_volume=10000.0,
-        initial_distribution=Distribution.GINI,
-        n_peers=1000,
-        n_corrupted=50,
-        p_fail=0.3,
-        p_join=0.001,
-        p_leave=0.001,
-        join_amount=NewEntry.NEW_MAX,
-        penalty_percentage=0.3,
-        reward=20.0,
+        initial_stake_volume=50000.0,
+        initial_distribution=Distribution.RANDOM,
+        n_peers=10000,
+        n_corrupted=500,
+        p_fail=0.5,
+        p_join=0.005,
+        p_leave=0.005,
+        join_amount=NewEntry.NEW_RANDOM,
+        penalty_percentage=0.5,
+        reward=50.0,
         scheduled_joins=scheduled_joins,
     )
 
@@ -255,12 +268,11 @@ def main():
     print(f"Epochs: {params.n_epochs}")
 
     # Lưới pmin/pmax
-    pmin_list = [0.05]
-    pmax_list = [1.0]
+    pmin_list = [0.0, 0.1, 0.2, 0.3, 0.4]
+    pmax_list = [0.6, 0.7, 0.8, 0.9, 1.0]
 
-    # Test baseline first (không set pmin/pmax)
     baseline_stats = test_baseline(
-        pmin_list, pmax_list, params, stakes, corrupted, runs=10
+        pmin_list, pmax_list, params, stakes, corrupted, runs=3
     )
 
     print(f"\nGrid sizes: |pmin|={len(pmin_list)}, |pmax|={len(pmax_list)}")

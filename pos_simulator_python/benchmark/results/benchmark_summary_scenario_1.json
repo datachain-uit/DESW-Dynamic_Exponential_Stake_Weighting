@@ -1,7 +1,7 @@
 {
   "metadata": {
-    "timestamp": "20251021_213007",
-    "total_execution_time": 930.2955136299133,
+    "timestamp": "20251023_124936",
+    "total_execution_time": 667.7863783836365,
     "parameters": {
       "n_epochs": 20000,
       "n_peers": 1000,
@@ -52,12 +52,12 @@
         996.6513768909846,
         1004.3486231090154
       ],
-      "execution_time_mean": 10.418,
-      "execution_time_std": 2.15,
-      "execution_time_total": 104.176,
+      "execution_time_mean": 8.095,
+      "execution_time_std": 0.912,
+      "execution_time_total": 80.954,
       "execution_time_ci_95": [
-        8.87959253437821,
-        11.955542305633388
+        7.442953288227847,
+        8.747829020350643
       ]
     },
     "SRSW_WEIGHTED": {
@@ -88,18 +88,18 @@
         993.1067642557189,
         999.8932357442811
       ],
-      "execution_time_mean": 30.988,
-      "execution_time_std": 1.855,
-      "execution_time_total": 309.88,
+      "execution_time_mean": 21.575,
+      "execution_time_std": 0.521,
+      "execution_time_total": 215.75,
       "execution_time_ci_95": [
-        29.661221643307226,
-        32.31468606390713
+        21.202153831755748,
+        21.947937959397205
       ],
-      "gini_p_value": 0.0,
+      "gini_p_value": 8.211988197627017e-15,
       "gini_significant": true,
       "gini_effect_size": -27.7496,
       "gini_interpretation": "large",
-      "nakamoto_p_value": 0.0,
+      "nakamoto_p_value": 4.571972101601181e-15,
       "nakamoto_significant": true,
       "nakamoto_effect_size": 29.6173,
       "nakamoto_interpretation": "large"
@@ -132,18 +132,18 @@
         993.1067642557189,
         999.8932357442811
       ],
-      "execution_time_mean": 33.941,
-      "execution_time_std": 2.871,
-      "execution_time_total": 339.41,
+      "execution_time_mean": 24.397,
+      "execution_time_std": 1.213,
+      "execution_time_total": 243.971,
       "execution_time_ci_95": [
-        31.887547840529518,
-        35.99453571850674
+        23.529209374194124,
+        25.26492858051779
       ],
-      "gini_p_value": 0.0,
+      "gini_p_value": 8.211988197627017e-15,
       "gini_significant": true,
       "gini_effect_size": -27.7496,
       "gini_interpretation": "large",
-      "nakamoto_p_value": 0.0,
+      "nakamoto_p_value": 4.571972101601181e-15,
       "nakamoto_significant": true,
       "nakamoto_effect_size": 29.6173,
       "nakamoto_interpretation": "large"
@@ -176,18 +176,18 @@
         995.5866395690138,
         1002.0133604309862
       ],
-      "execution_time_mean": 17.637,
-      "execution_time_std": 2.362,
-      "execution_time_total": 176.37,
+      "execution_time_mean": 12.682,
+      "execution_time_std": 0.458,
+      "execution_time_total": 126.822,
       "execution_time_ci_95": [
-        15.94736647768235,
-        19.326621101663353
+        12.354488397896647,
+        13.00984532707894
       ],
-      "gini_p_value": 0.0,
+      "gini_p_value": 5.001693335990244e-14,
       "gini_significant": true,
       "gini_effect_size": -22.6965,
       "gini_interpretation": "large",
-      "nakamoto_p_value": 0.0,
+      "nakamoto_p_value": 6.618246420317623e-14,
       "nakamoto_significant": true,
       "nakamoto_effect_size": 22.0,
       "nakamoto_interpretation": "large"
