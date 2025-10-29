@@ -15,7 +15,7 @@ import statistics
 from datetime import datetime
 
 # Add src to path (one level up from gini_timing -> src)
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'src'))
+sys.path.append(os.path.join(os.path.dirname(__file__), "..", "src"))
 
 from timing_utils import gini_with_timing  # noqa: E402
 
@@ -67,12 +67,16 @@ def benchmark_gini_time(
 
             results[n][pattern] = {
                 "mean_time": statistics.mean(exec_times) if exec_times else 0.0,
-                "std_time": statistics.stdev(exec_times) if len(exec_times) > 1 else 0.0,
+                "std_time": (
+                    statistics.stdev(exec_times) if len(exec_times) > 1 else 0.0
+                ),
                 "min_time": min(exec_times) if exec_times else 0.0,
                 "max_time": max(exec_times) if exec_times else 0.0,
                 "median_time": statistics.median(exec_times) if exec_times else 0.0,
                 "mean_gini": statistics.mean(gini_values) if gini_values else 0.0,
-                "std_gini": statistics.stdev(gini_values) if len(gini_values) > 1 else 0.0,
+                "std_gini": (
+                    statistics.stdev(gini_values) if len(gini_values) > 1 else 0.0
+                ),
                 "iterations": iterations_per_case,
             }
 
@@ -116,7 +120,9 @@ def save_results(results: dict):
     # Save CSV (long format) - only one file format as requested
     csv_path = os.path.join(results_dir, f"gini_time_{tag}_{ts}.csv")
     with open(csv_path, "w", encoding="utf-8") as f:
-        f.write("peers,pattern,mean_time,std_time,min_time,max_time,median_time,mean_gini,std_gini,iterations\n")
+        f.write(
+            "peers,pattern,mean_time,std_time,min_time,max_time,median_time,mean_gini,std_gini,iterations\n"
+        )
         for n, patterns in rounded.items():
             for pattern, stats in patterns.items():
                 f.write(
@@ -125,23 +131,19 @@ def save_results(results: dict):
     print(f"Saved CSV: {csv_path}")
 
 
-
 def main():
     # Cấu hình mặc định
     random.seed(42)
     np.random.seed(42)
 
-    peer_sizes = [10000, 20000, 50000, 100000]
+    peer_sizes = [10000, 100000, 1000000, 10000000]
     patterns = ["uniform", "random"]
     iterations_per_case = 50
 
-    print("\nĐO THỜI GIAN TÍNH GINI - BẢN THƯỜNG (original)")
-    print("=" * 60)
+
     original_results = benchmark_gini_time(peer_sizes, patterns, iterations_per_case)
     save_results(original_results)
 
 
 if __name__ == "__main__":
     main()
-
-
