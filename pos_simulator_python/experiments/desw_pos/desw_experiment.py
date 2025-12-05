@@ -12,33 +12,39 @@ import matplotlib.pyplot as plt
 import json
 
 # Add src and experiments to path
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..', 'src'))
-sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+sys.path.append(os.path.join(os.path.dirname(__file__), "..", "..", "src"))
+sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
 
 from parameters import Parameters, PoS, Distribution, NewEntry
 from simulator import simulate
-from utils import generate_peers, gini, HHI_coefficient
-from experiment_utils import save_results_to_json, create_and_save_plot, print_experiment_results, get_experiment_config, get_scheduled_joins
+from utils import generate_peers, gini
+from experiment_utils import (
+    save_results_to_json,
+    create_and_save_plot,
+    print_experiment_results,
+    get_experiment_config,
+    get_scheduled_joins,
+)
 
 
 # SCHEDULED JOIN SETUP - Edit directly here
 # Example: [(5000, 50000), (10000, 30000)] -> At epoch 5000 a validator joins with 50k stake, at epoch 10000 joins with 30k stake
 SCHEDULED_JOINS = [
-    # (5000, 10000),  
-    # (15000, 50000),  
+    # (5000, 10000),
+    # (15000, 50000),
 ]
 
-foldername = 'desw_pos'
+foldername = "desw_pos"
 
 
 def run_desw_experiment(starting_gini=0.3, n_epochs=50000):
     """Run DESW PoS experiment"""
     print("DESW PoS EXPERIMENT")
     print("=" * 50)
-    
+
     # Get join schedule
     scheduled_joins = get_scheduled_joins(SCHEDULED_JOINS)
-    
+
     # Set parameters
     params = Parameters(
         n_epochs=n_epochs,
@@ -53,59 +59,77 @@ def run_desw_experiment(starting_gini=0.3, n_epochs=50000):
         join_amount=NewEntry.NEW_RANDOM,
         penalty_percentage=0.5,
         reward=20.0,
-        scheduled_joins=scheduled_joins
+        scheduled_joins=scheduled_joins,
     )
-    
+
     # Generate initial stakes
     stakes = generate_peers(
-        params.n_peers, 
-        params.initial_stake_volume, 
-        params.initial_distribution, 
-        starting_gini
+        params.n_peers,
+        params.initial_stake_volume,
+        params.initial_distribution,
+        starting_gini,
     )
-    
+
     # Create corrupted peers
     corrupted = random.sample(range(params.n_peers), params.n_corrupted)
-    
+
     print(f"Initial Gini: {gini(stakes):.3f}")
     print(f"Peers: {len(stakes)}, Corrupted: {len(corrupted)}")
     print(f"Epochs: {n_epochs}")
-    
+
     # Run simulation
     print("\nStarting simulation...")
-    gini_history, peers_history, nakamoto_history, hhi_history = simulate(stakes, corrupted, params)
-    
+    gini_history, peers_history, nakamoto_history, hhi_history = simulate(
+        stakes, corrupted, params
+    )
+
     # Print results
-    print_experiment_results("DESW PoS", gini_history, nakamoto_history, peers_history, hhi_history)
-    
+    print_experiment_results(
+        "DESW PoS", gini_history, nakamoto_history, peers_history, hhi_history
+    )
+
     # Plot and save charts
-    create_and_save_plot(gini_history, 'DESW PoS - Gini Coefficient Evolution', 
-                        'Epoch', 'Gini Coefficient', 'desw_gini.png', 'blue',foldername)
-    
-    create_and_save_plot(nakamoto_history, 'DESW PoS - Nakamoto Coefficient Evolution', 
-                        'Epoch', 'Nakamoto Coefficient', 'desw_nakamoto.png', 'red',foldername)
-    
-    # create_and_save_plot(peers_history, 'DESW PoS - Peers Count Evolution', 
+    create_and_save_plot(
+        gini_history,
+        "DESW PoS - Gini Coefficient Evolution",
+        "Epoch",
+        "Gini Coefficient",
+        "desw_gini.png",
+        "blue",
+        foldername,
+    )
+
+    create_and_save_plot(
+        nakamoto_history,
+        "DESW PoS - Nakamoto Coefficient Evolution",
+        "Epoch",
+        "Nakamoto Coefficient",
+        "desw_nakamoto.png",
+        "red",
+        foldername,
+    )
+
+    # create_and_save_plot(peers_history, 'DESW PoS - Peers Count Evolution',
     #                     'Epoch', 'Number of Peers', 'desw_peers.png', 'green',foldername)
-    
-    # create_and_save_plot(hhi_history, 'DESW PoS - HHI Coefficient Evolution', 
+
+    # create_and_save_plot(hhi_history, 'DESW PoS - HHI Coefficient Evolution',
     #                     'Epoch', 'HHI Coefficient', 'desw_hhi.png', 'orange',foldername)
-    
+
     # Save data
     result = {
-        'starting_gini': starting_gini,
-        'final_gini': gini_history[-1],
-        'final_nakamoto': nakamoto_history[-1],
-        'final_peers': peers_history[-1],
-        'final_hhi': hhi_history[-1],
-        'gini_history': gini_history,
-        'nakamoto_history': nakamoto_history,
-        'peers_history': peers_history,
-        'hhi_history': hhi_history
+        "starting_gini": starting_gini,
+        "final_gini": gini_history[-1],
+        "final_nakamoto": nakamoto_history[-1],
+        "final_peers": peers_history[-1],
+        "final_hhi": hhi_history[-1],
+        "gini_history": gini_history,
+        "nakamoto_history": nakamoto_history,
+        "peers_history": peers_history,
+        "hhi_history": hhi_history,
     }
-    
-    save_results_to_json({0: result}, 'desw_results.json',foldername)
-    
+
+    save_results_to_json({0: result}, "desw_results.json", foldername)
+
     return result
 
 
@@ -113,30 +137,31 @@ def main():
     """Run DESW PoS experiment"""
     print("DESW PoS Simulator")
     print("=" * 60)
-    
+
     # Set random seed for reproducibility
     random.seed(42)
     np.random.seed(42)
-    
+
     try:
         # Get configuration from user
         starting_gini, n_epochs = get_experiment_config()
-        
+
         print(f"\nStarting experiment with:")
         print(f"- Starting Gini: {starting_gini}")
         print(f"- Epochs: {n_epochs}")
         print()
-        
+
         # Run experiment
         result = run_desw_experiment(starting_gini, n_epochs)
-        
+
         print("\n" + "=" * 60)
         print("DESW PoS experiment completed successfully!")
         print(f"Results are saved in the 'results/' folder")
-        
+
     except Exception as e:
         print(f"Error during execution: {e}")
         import traceback
+
         traceback.print_exc()
 
 
