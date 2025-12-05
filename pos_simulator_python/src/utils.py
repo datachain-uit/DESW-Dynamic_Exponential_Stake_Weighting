@@ -504,7 +504,7 @@ def log_weighted_consensus(peers: List[float]) -> int:
     
     # Avoid log(0) by adding small value
     epsilon = 1e-8
-    log_stakes = [np.sqrt(max(stake, epsilon)) for stake in peers]
+    log_stakes = [np.log(max(stake, epsilon)) for stake in peers]
     
     total = sum(log_stakes)
     if total == 0:
